@@ -1,44 +1,42 @@
 package PalindroneCheckerApp;
 import java.util.*;
 
-public class UC6 {
+public class UC7 {
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("===== UC6: Queue + Stack Based Palindrome Checker =====");
+        System.out.println("===== UC7: Deque-Based Optimized Palindrome Checker =====");
         System.out.print("Enter a string: ");
         String input = sc.nextLine();
 
         // Remove spaces and convert to lowercase
         input = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Create Queue and Stack
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        // Create Deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Step 1: Enqueue characters & Push to stack
+        // Step 1: Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            queue.add(ch);      // Enqueue (FIFO)
-            stack.push(ch);     // Push (LIFO)
+            deque.addLast(input.charAt(i));
         }
 
-        // Step 2: Compare dequeue vs pop
         boolean isPalindrome = true;
 
-        while (!queue.isEmpty()) {
-            char fromQueue = queue.remove();   // Dequeue
-            char fromStack = stack.pop();      // Pop
+        // Step 2 & 3: Remove first and last and compare
+        while (deque.size() > 1) {
 
-            if (fromQueue != fromStack) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Step 3: Display Result
+        // Step 4: Display Result
         if (isPalindrome) {
             System.out.println("Result: The given string is a PALINDROME.");
         } else {
@@ -48,5 +46,3 @@ public class UC6 {
         sc.close();
     }
 }
-
-    
